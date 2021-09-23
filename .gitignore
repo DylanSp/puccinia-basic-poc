@@ -34,3 +34,6 @@ npm-debug.log
 
 # Elixir language server
 .elixir_ls
+
+# build artifacts from native/
+/priv/native/

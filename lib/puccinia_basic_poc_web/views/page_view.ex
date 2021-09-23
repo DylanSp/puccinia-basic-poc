@@ -1,7 +1,9 @@
 defmodule PucciniaBasicPocWeb.PageView do
   use PucciniaBasicPocWeb, :view
 
+  import PucciniaBasicPoc.Nif
+
   def get_greeting_message() do
-    "Hello, SUBJECT_NAME_HERE!"
+    say_hello("Dylan")
   end
 end
