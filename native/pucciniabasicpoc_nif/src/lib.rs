@@ -1,6 +1,7 @@
-#[rustler::nif]
-fn say_hello(name: String) -> String {
-    format!("Hello, {}!", name)
-}
+mod logic;
 
-rustler::init!("Elixir.PucciniaBasicPoc.Nif", [say_hello]);
+#[cfg(not(target_family = "wasm"))]
+mod nif;
+
+#[cfg(target_family = "wasm")]
+mod wasm;
