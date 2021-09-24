@@ -16,11 +16,15 @@ defmodule Mix.Tasks.Build.Wasm do
     native_folder_name = "#{project_name}_rs"
 
     cmd("wasm-pack", ["build", "--target", "web"], cd: "native/#{native_folder_name}")
-    files = ["#{native_folder_name}.js", "#{native_folder_name}_bg.wasm"]
+
+    files = [
+      "#{native_folder_name}.js",
+      "#{native_folder_name}_bg.wasm"
+    ]
 
     for file <- files do
       source_path = join(["native", native_folder_name, "pkg", file])
-      target_path = join(["priv", "static", "assets", file])
+      target_path = join(["assets", "js", file])
       cp!(source_path, target_path)
     end
   end

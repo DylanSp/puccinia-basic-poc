@@ -16,7 +16,7 @@ config :puccinia_basic_poc, PucciniaBasicPocWeb.Endpoint,
   secret_key_base: "Nlk/Rlss8UFaWtcO9PYsEax8429E7GwhnIUG5F679DeywDVihaK7QCFNmxNcuqEF",
   watchers: [
     # Use custom Node script that calls esbuild
-    node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)]
+    node: ["build.mjs", "--watch", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
