@@ -1,5 +1,5 @@
 defmodule PucciniaBasicPoc.Nif do
-  use Rustler, otp_app: :puccinia_basic_poc, crate: "pucciniabasicpoc_nif"
+  use Rustler, otp_app: :puccinia_basic_poc, crate: "pucciniabasicpoc_rs"
 
   # When your NIF is loaded, it will override this function.
   def say_hello(_name) do

@@ -15,8 +15,8 @@ config :puccinia_basic_poc, PucciniaBasicPocWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "Nlk/Rlss8UFaWtcO9PYsEax8429E7GwhnIUG5F679DeywDVihaK7QCFNmxNcuqEF",
   watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    # Use custom Node script that calls esbuild
+    node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
