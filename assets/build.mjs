@@ -4,10 +4,31 @@
 import { build } from "esbuild";
 import path from "path";
 import fs from "fs";
+import { execSync } from "child_process";
 
 const args = process.argv.slice(2);
 const watch = args.includes("--watch");
 const deploy = args.includes("--deploy");
+
+const buildWasm = () => {
+  const projectName = "pucciniabasicpoc";
+  const nativeFolderName = `${projectName}_rs`;
+
+  execSync("wasm-pack build --target web", {
+    cwd: path.join("..", "native", nativeFolderName),
+  });
+
+  const files = [`${nativeFolderName}.js`, `${nativeFolderName}_bg.wasm`];
+
+  fs.mkdirSync(path.join("js", "pkg"), {
+    recursive: true,
+  });
+  for (const file of files) {
+    const sourcePath = path.join("..", "native", nativeFolderName, "pkg", file);
+    const targetPath = path.join("js", "pkg", file);
+    fs.copyFileSync(sourcePath, targetPath);
+  }
+};
 
 let wasmPlugin = {
   name: "wasm",
@@ -70,6 +91,7 @@ if (deploy) {
   };
 }
 
+buildWasm();
 const promise = build(opts);
 
 if (watch) {

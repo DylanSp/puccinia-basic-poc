@@ -1,3 +1,3 @@
 # PucciniaBasicPoc
 
-With `wasm-pack` installed, run `mix build.wasm` before running the Phoenix server to put the WASM/JS files in assets/js, to be loaded by esbuild.
+Should work out of the box. WASM assets are built using the `assets/build.mjs` script, which calls `wasm-pack`, then copies the output into `assets/js/pkg`, where it can be imported from `assets/js/app.js`.

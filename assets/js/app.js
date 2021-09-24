@@ -2,8 +2,8 @@
 // Remove this line if you add a your own CSS build pipeline (e.g postcss).
 import "../css/app.css";
 
-import { default as wasmbin } from "./pucciniabasicpoc_rs_bg.wasm";
-import init, { say_hello } from "./pucciniabasicpoc_rs.js";
+import { default as wasmbin } from "./pkg/pucciniabasicpoc_rs_bg.wasm";
+import init, { say_hello } from "./pkg/pucciniabasicpoc_rs.js";
 
 init(wasmbin).then(() => {
   document.getElementById("client-hello").addEventListener("click", () => {

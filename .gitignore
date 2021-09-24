@@ -39,4 +39,5 @@ npm-debug.log
 /priv/native/
 
 # build artifacts from running wasm-pack
-/assets/js/pucciniabasicpoc_rs*
+/assets/js/pkg/
+
