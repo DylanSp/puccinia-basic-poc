@@ -1,0 +1,9 @@
+assets/node_modules/
+deps/
+_build/
+.elixir_ls/
+priv/native/
+priv/static/assets/
+assets/js/pkg/
+native/pucciniabasicpoc_rs/pkg/
+native/pucciniabasicpoc_rs/target/

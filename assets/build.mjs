@@ -1,6 +1,9 @@
 // borrowed from https://hexdocs.pm/phoenix/1.6.0-rc.1/asset_management.html
 // and https://github.com/evanw/esbuild/issues/408#issuecomment-757555771
 
+// note: sensitive to current working directory, currently assumes running in assets/
+// would be better to accurately determine project root directory, then work relative to that
+
 import { build } from "esbuild";
 import path from "path";
 import fs from "fs";
@@ -10,22 +13,32 @@ const args = process.argv.slice(2);
 const watch = args.includes("--watch");
 const deploy = args.includes("--deploy");
 
+const cwdDetails = path.parse(process.cwd());
+const projectRootPath =
+  cwdDetails.base === "assets" ? path.join(process.cwd(), "..") : process.cwd();
+
 const buildWasm = () => {
   const projectName = "pucciniabasicpoc";
   const nativeFolderName = `${projectName}_rs`;
 
   execSync("wasm-pack build --target web", {
-    cwd: path.join("..", "native", nativeFolderName),
+    cwd: path.join(projectRootPath, "native", nativeFolderName),
   });
 
   const files = [`${nativeFolderName}.js`, `${nativeFolderName}_bg.wasm`];
 
-  fs.mkdirSync(path.join("js", "pkg"), {
+  fs.mkdirSync(path.join(projectRootPath, "assets", "js", "pkg"), {
     recursive: true,
   });
   for (const file of files) {
-    const sourcePath = path.join("..", "native", nativeFolderName, "pkg", file);
-    const targetPath = path.join("js", "pkg", file);
+    const sourcePath = path.join(
+      projectRootPath,
+      "native",
+      nativeFolderName,
+      "pkg",
+      file
+    );
+    const targetPath = path.join(projectRootPath, "assets", "js", "pkg", file);
     fs.copyFileSync(sourcePath, targetPath);
   }
 };
@@ -67,10 +80,10 @@ const loader = {
 const plugins = [wasmPlugin];
 
 let opts = {
-  entryPoints: ["js/app.js"],
+  entryPoints: [path.join(projectRootPath, "assets", "js", "app.js")],
   bundle: true,
   target: "es2020",
-  outdir: "../priv/static/assets",
+  outdir: path.join(projectRootPath, "priv", "static", "assets"),
   logLevel: "info",
   loader,
   plugins,
