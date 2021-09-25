@@ -81,4 +81,4 @@ ENV MIX_ENV=prod
 ENV SECRET_KEY_BASE=nokey
 ENV PORT=4000
 
-CMD ["bin/puccinia_basic_poc, "start"]
+CMD ["bin/puccinia_basic_poc", "start"]
